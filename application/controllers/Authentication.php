@@ -114,14 +114,10 @@ class Authentication extends REST_Controller {
             
             if ($user_exists) {
                 $all_convos = $this->user_activity_model->get_by($user_exists["id"]);
-                //return $res = $all_convos;
+
                 if (sizeof($all_convos) > 0) {
                     $i = 0;
                     foreach ($all_convos as $row) {
-                        // print_r("|||||||");
-                        // print_r($val);
-                        // print_r($key);
-                        // print_r("|||||||");
                         $res[$i]["conversation"][] = array(
                             "id"          => $row["id"],
                             "messageFrom" => $row["message_from"],
@@ -143,7 +139,7 @@ class Authentication extends REST_Controller {
 
                     $this->response([
                         "code" => REST_Controller::HTTP_OK,
-                        "payload" => $finalRes//$res
+                        "payload" => $finalRes
                     ], REST_Controller::HTTP_OK);
                 }
             }else{
@@ -153,37 +149,6 @@ class Authentication extends REST_Controller {
                     "message" => "No se encontró usuario con ese id."
                 ], REST_Controller::HTTP_NOT_FOUND);
             }
-
-            // if(!empty($user_exists)){ 
-            //     $i = 0;
-            //     foreach ($all_convos as $row) {
-
-            //         //$res[$i]["conversation"][] = array(
-            //         $res[$i] = array(
-            //             "id"          => $row["id"],
-            //             "messageFrom" => $row["message_from"],
-            //             "value"       => $row["message_text"],
-            //             "timestamp"   => intval($row["timestamp"]),
-            //         );
-            //         $get_datetime = $row["timestamp"];
-
-            //         $i++;
-            //     }
-                
-            //     $this->response([
-            //         "code" => REST_Controller::HTTP_OK,
-            //         "payload" => $res
-            //     ], REST_Controller::HTTP_OK);
-                    
-            // }else{
-            //     //NOT_FOUND (404) 
-            //     $this->response([
-            //         "status" => false,
-            //         "message" => "No se encontró usuario con ese id."
-            //     ], REST_Controller::HTTP_NOT_FOUND);
-            // }
-            
-            //echo json_encode($res, JSON_UNESCAPED_UNICODE);
         }else{
             //NOT_FOUND (404) 
             $this->response([
